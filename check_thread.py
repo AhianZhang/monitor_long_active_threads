@@ -59,7 +59,7 @@ def checkthred(plist, result):
         if not plist:
             for v_sql in result:
                 plist.append(v_sql)
-                ding_md = "# 发现SLOW SQL \n- **线程ID**: %s\n - **用  户:**  %s\n - **客户端:** %s\n- **数据库:** %s\n- **执行时间:** %s秒 \n- **SQL:** \n> %s" % (
+                ding_md = '# <font face=\"微软雅黑\">发现SLOW SQL ❌</font> \n **线程ID:**  <font color=\"#000080\">%s</font><br /> \n \n  **用  户:**  <font color=\"#000080\">%s</font><br /> \n \n **主  机:**  <font color=\"#000080\">%s</font><br /> \n \n**DBNAME:**  <font color=\"#000080\">%s</font><br /> \n \n**执行时间(s):**  <font color=\"#000080\">%s</font><br />\n \n **负责人:** @157xxxx @157xxxx @157xxxx <br /> \n \n**SQL:**  <font color=\"#000080\">%s</font><br /> \n' % (
                     v_sql['id'], v_sql['user'], v_sql['host'], v_sql['db'], v_sql['time'], v_sql['info'])
                 dingding_robot(ding_md)
         else:
@@ -68,7 +68,7 @@ def checkthred(plist, result):
                     if active_session['vsha'] != plist[i]['vsha']:
                         if i == len(plist) - 1:
                             plist.append(active_session)
-                            ding_md = "# 发现SLOW SQL \n- **线程ID**: %s\n - **用  户:**  %s\n - **客户端:** %s\n- **数据库:** %s\n- **执行时间:** %s秒  \n- **SQL:** \n> %s" % (
+                            ding_md = '# <font face=\"微软雅黑\">发现SLOW SQL ❌</font> \n **线程ID:**  <font color=\"#000080\">%s</font><br /> \n \n  **用  户:**  <font color=\"#000080\">%s</font><br /> \n \n **主  机:**  <font color=\"#000080\">%s</font><br /> \n \n**DBNAME:**  <font color=\"#000080\">%s</font><br /> \n \n**执行时间(s):**  <font color=\"#000080\">%s</font><br />\n \n **负责人:** @157xxxx @157xxxx @157xxxx<br /> \n \n**SQL:**  <font color=\"#000080\">%s</font><br /> \n' % (
                                 active_session['id'], active_session['user'], active_session['host'],
                                 active_session['db'],
                                 active_session['time'], active_session['info'])
@@ -82,7 +82,7 @@ def checkthred(plist, result):
         # 判断session是否执行完毕，若是，则从列表中删除此sql，并钉钉推送执行完成，若否，则不做处理
         if not result:
             for index, plist_session in enumerate(plist):
-                ding_md = "# SLOW SQL执行完成 \n- **线程ID:**  %s \n- **用  户:**  %s \n- **客户端:** %s \n- **数据库:** %s \n - **执行时间:** %s秒\n- **SQL:** \n> %s" % (
+                ding_md = '# <font face=\"微软雅黑\">SLOW SQL执行完成 ✅</font> \n **线程ID:**  <font color=\"#000080\">%s</font><br /> \n \n  **用  户:**  <font color=\"#000080\">%s</font><br /> \n \n **主  机:**  <font color=\"#000080\">%s</font><br /> \n \n**DBNAME:**  <font color=\"#000080\">%s</font><br /> \n \n**执行时间(s):**  <font color=\"#E8441B\">%s</font><br /> \n \n**SQL:**  <font color=\"#000080\">%s</font><br /> \n' % (
                     plist_session['id'], plist_session['user'], plist_session['host'], plist_session['db'],
                     plist_session['time'], plist_session['info'])
                 dingding_robot(ding_md)
@@ -95,7 +95,7 @@ def checkthred(plist, result):
                         break
                     else:
                         if plist_session['vsha'] != result[i]['vsha'] and i == len(result) - 1:
-                            ding_md = "# SLOW SQL执行完成 \n- **线程ID:**  %s \n- **用  户:**  %s \n- **客户端:** %s \n- **数据库:** %s \n - **执行时间:** %s秒\n- **SQL:** \n> %s" % (
+                            ding_md = '# <font face=\"微软雅黑\">SLOW SQL执行完成 ✅</font> \n **线程ID:**  <font color=\"#000080\">%s</font><br /> \n \n  **用  户:**  <font color=\"#000080\">%s</font><br /> \n \n **主  机:**  <font color=\"#000080\">%s</font><br /> \n \n**DBNAME:**  <font color=\"#000080\">%s</font><br /> \n \n**执行时间(s):**  <font color=\"#E8441B\">%s</font><br /> \n \n**SQL:**  <font color=\"#000080\">%s</font><br /> \n' % (
                                 plist_session['id'], plist_session['user'], plist_session['host'], plist_session['db'],
                                 plist_session['time'], plist_session['info'])
                             dingding_robot(ding_md)
@@ -111,10 +111,10 @@ def checkthred(plist, result):
 
 
 def dingding_robot(content):
-    webhook = "https://oapi.dingtalk.com/robot/send?access_token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    webhook = "https://oapi.dingtalk.com/robot/send?access_token=4a53388f5f12014c79d6a3ad9a9c633942d03e8c289c4951b815ec4463ec9e42"
     headers = {'content-type': 'application/json'}
     data = {"msgtype": "markdown", "markdown": {"title": "SLOW SQL监控", "text": content},
-            "at": {"atMobiles": ["15731693317"]}}
+            "at": {"atMobiles": ["157xxxx","157xxxx","157xxxx"]}}
     r = requests.post(webhook, headers=headers, data=json.dumps(data))
     r.encoding = 'utf-8'
     return (r.text)
@@ -140,7 +140,7 @@ if __name__ == "__main__":
 
     # main()
 
-    schedule.every(2).seconds.do(main, args)  ## 定时任务，每两秒执行一次
+    schedule.every(2).seconds.do(main, args)         ## 定时任务，每两秒执行一次
     while True:
         schedule.run_pending()
         time.sleep(1)
